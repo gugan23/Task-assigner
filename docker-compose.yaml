@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb+srv://gugan7169:tV3SRKNvgS0ajk5V@gugan.idzk8.mongodb.net/template_management?retryWrites=true&w=majority
+      - JWT_SECRET_KEY=8c661a2395849a97e29c34825da53b2951e6fc0afab2f0c845f87580bfea4984
+      - PORT=5000
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./template-management
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"

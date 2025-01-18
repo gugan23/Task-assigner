@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
-from flask import Flask, send_from_directory
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import timedelta, datetime
@@ -10,8 +9,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
 load_dotenv()
-app = Flask(__name__, static_folder='template-management/build')
-
 app = Flask(__name__, static_folder='template-management/build')
 CORS(app)
 
