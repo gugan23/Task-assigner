@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager, create_access_token, get_jwt_identity, jwt_required
+from flask import Flask, send_from_directory
 from pymongo import MongoClient
 from bson import ObjectId
 from datetime import timedelta, datetime
@@ -9,6 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS
 
 load_dotenv()
+app = Flask(__name__, static_folder='template-management/build')
 
 app = Flask(__name__)
 CORS(app)
@@ -372,5 +374,13 @@ def get_users():
     except Exception as e:
         return jsonify({'message': str(e)}), 500
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=os.getenv('PORT', 5000))
