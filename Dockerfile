@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y nodejs npm
 
 # Copy backend files
 COPY app.py .
-COPY .env .
 
 # Copy frontend files
 COPY template-management/ template-management/
